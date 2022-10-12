@@ -1,5 +1,7 @@
 package com.onefly.united.oauth2.service;
 
+import com.onefly.united.common.exception.RenException;
+import com.onefly.united.common.utils.Result;
 import com.onefly.united.oauth2.domain.SysUserDTO;
 import com.onefly.united.oauth2.web.Oauth2Client;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,21 @@ public class SysUserService {
     private Oauth2Client oauth2Client;
 
     public SysUserDTO get(Long id) {
-        return oauth2Client.loadSysUser(id);
+        Result<SysUserDTO> result = oauth2Client.loadSysUser(id);
+        if (!result.success()) {
+            throw new RenException(result.getMsg());
+        }
+        return result.getData();
     }
 
     /**
      * 根据部门ID,查询用户Id列表
      */
     public List<Long> getUserIdListByDeptId(List<Long> deptIdList) {
-        return oauth2Client.getUserIdListByDeptId(deptIdList);
+        Result<List<Long>> result = oauth2Client.getUserIdListByDeptId(deptIdList);
+        if (!result.success()) {
+            throw new RenException(result.getMsg());
+        }
+        return result.getData();
     }
 }

@@ -3,6 +3,7 @@ package com.onefly.united.oauth2.service;
 import com.alibaba.fastjson.JSON;
 import com.onefly.united.common.exception.ErrorCode;
 import com.onefly.united.common.exception.RenException;
+import com.onefly.united.common.utils.Result;
 import com.onefly.united.oauth2.web.Oauth2Client;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,11 @@ public class SysParamsService {
      * @param clazz     Object对象
      */
     public <T> T getValueObject(String paramCode, Class<T> clazz) {
-        String paramValue = oauth2Client.getValueObject(paramCode);
+        Result<String> result = oauth2Client.getValueObject(paramCode);
+        if (!result.success()) {
+            throw new RenException(result.getMsg());
+        }
+        String paramValue = result.getData();
         if (StringUtils.isNotBlank(paramValue)) {
             return JSON.parseObject(paramValue, clazz);
         }
@@ -39,6 +44,10 @@ public class SysParamsService {
      * @param paramValue 参数值
      */
     public int updateValueByCode(String paramCode, String paramValue) {
-        return oauth2Client.updateValueByCode(paramCode, paramValue);
+        Result<Integer> result = oauth2Client.updateValueByCode(paramCode, paramValue);
+        if (!result.success()) {
+            throw new RenException(result.getMsg());
+        }
+        return result.getData();
     }
 }

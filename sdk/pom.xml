@@ -20,7 +20,6 @@
             <groupId>com.onefly.united</groupId>
             <artifactId>united-common</artifactId>
             <version>1.1.0</version>
-            <scope>provided</scope>
         </dependency>
         <!--spring-cloud-starter-->
         <dependency>

@@ -97,9 +97,9 @@ spring:
     baseline-on-migrate: true
     validate-on-migrate: false
   resources:
-    static-locations: file:/storage/KuaiPan/app/resources/,classpath:/META-INF/resources/
+    static-locations: file:/app/resources/,classpath:/META-INF/resources/
   thymeleaf:
-    prefix: file:/storage/KuaiPan/app/resources/
+    prefix: file:/app/resources/
 
 management:
   endpoints:
