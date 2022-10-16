@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -35,6 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (sysUserDTO == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
+        //获取用户对应的部门数据权限
+        List<Long> deptIdList = shiroService.getDataScopeList(sysUserDTO.getId());
         Set<String> authoritiesStr = shiroService.loadUserPermissions(sysUserDTO.getSuperAdmin(), sysUserDTO.getId());
         String[] roles = new String[authoritiesStr.size()];
         UserDetail ud = new UserDetail(
@@ -44,7 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 true, true, true,
                 AuthorityUtils.createAuthorityList(authoritiesStr.toArray(roles)), sysUserDTO.getId()
                 , sysUserDTO.getRealName(), sysUserDTO.getHeadUrl(), sysUserDTO.getGender(), sysUserDTO.getEmail(), sysUserDTO.getMobile(),
-                sysUserDTO.getDeptId(), sysUserDTO.getStatus(), sysUserDTO.getSuperAdmin(), sysUserDTO.getRoleIdList());
+                sysUserDTO.getDeptId(), sysUserDTO.getStatus(), sysUserDTO.getSuperAdmin(), deptIdList);
         return ud;
     }
 }

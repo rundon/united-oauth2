@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <properties>
-        <captcha.version>1.6.2</captcha.version>
         <commons-pool2.version>2.9.0</commons-pool2.version>
     </properties>
     <artifactId>oauth2</artifactId>
@@ -25,11 +24,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.whvcse</groupId>
-            <artifactId>easy-captcha</artifactId>
-            <version>${captcha.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.penggle</groupId>

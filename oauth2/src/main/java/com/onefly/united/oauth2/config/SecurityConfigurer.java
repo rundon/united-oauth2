@@ -172,7 +172,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         @Override
         public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-            Object obj = authentication.getPrincipal();
             String accessToken = extractHeaderToken(request);
             if (StringUtils.isNotBlank(accessToken)) {
                 OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);

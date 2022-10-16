@@ -9,6 +9,7 @@
 package com.onefly.united.security.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.onefly.united.common.annotation.DataFilter;
 import com.onefly.united.common.constant.Constant;
 import com.onefly.united.common.page.PageData;
 import com.onefly.united.common.service.impl.BaseServiceImpl;
@@ -47,6 +48,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @DataFilter
     @Override
     public PageData<SysUserDTO> page(Map<String, Object> params) {
         //转换成like

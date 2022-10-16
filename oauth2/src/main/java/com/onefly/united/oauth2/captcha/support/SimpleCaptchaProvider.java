@@ -9,7 +9,6 @@ import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import com.google.common.base.Strings;
-import com.onefly.united.common.exception.RenException;
 import com.onefly.united.oauth2.captcha.CaptchaProperties;
 import com.onefly.united.oauth2.captcha.CaptchaStore;
 import com.onefly.united.oauth2.service.ICaptchaProvider;
