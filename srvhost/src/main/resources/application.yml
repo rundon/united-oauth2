@@ -126,7 +126,7 @@ captcha:
     kaptcha.textproducer.char.space: 3
     kaptcha.textproducer.char.length: 4
     kaptcha.textproducer.font.size: 45
-    kaptcha.textproducer.char.string: 123456789
+    kaptcha.textproducer.char.string: 123456789abcd
   enabled: true
 
 feign:
