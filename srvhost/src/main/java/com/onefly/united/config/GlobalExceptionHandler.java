@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2019. utaka and/or its affiliates.
- */
-
 package com.onefly.united.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

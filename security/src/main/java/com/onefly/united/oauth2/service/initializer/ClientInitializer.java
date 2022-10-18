@@ -37,11 +37,11 @@ public class ClientInitializer {
 
         createIfNotExists(OPENID_CLIENT, "693bb00a19134e3c9fc990bc9742f614", null,
                 "authorization_code,password,refresh_token", "openid",
-                "http://uutaka.com,http://localhost:8080,http://172.16.2.28:8080,http://172.16.2.159:8080");
+                "http://onefly.com,http://localhost:8080,http://172.16.2.28:8080,http://172.16.2.159:8080");
 
         createIfNotExists(TRUSTED_CLIENT, idGenerator.generateId().toString(), "ROLE_TRUSTED_CLIENT",
                 "authorization_code,refresh_token", "openid",
-                "http://hubiplus.com,http://hubi.com,http://cgod.me");
+                "http://onefly.com,http://hubi.com,http://cgod.me");
         createIfNotExists(ANDROID, idGenerator.generateId().toString(), "ANDROID",
                 "client_credentials,password", "app", "");
         createIfNotExists(IOS, idGenerator.generateId().toString(), "IOS",
