@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sys")
+@RequestMapping("/api")
 public class FeignController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class FeignController {
     @Autowired
     private SysParamsService sysParamsService;
 
-    @GetMapping("user")
+    @GetMapping("/sys/user")
     public Result<SysUserDTO> get(@RequestParam(value = "id", required = true) Long id) {
         SysUserDTO data = sysUserService.get(id);
         //用户角色列表
@@ -32,22 +32,22 @@ public class FeignController {
         return new Result().ok(data);
     }
 
-    @PostMapping("user/deptId")
+    @PostMapping("/sys/user/deptId")
     public Result<List<Long>> getUserIdListByDeptId(@RequestBody List<Long> deptIdList) {
         return new Result().ok(sysUserService.getUserIdListByDeptId(deptIdList));
     }
 
-    @GetMapping("user/role")
+    @GetMapping("/sys/user/role")
     public Result<List<Long>> getRoleIdList(@RequestParam(value = "userId", required = true) Long userId) {
         return new Result().ok(sysRoleUserService.getRoleIdList(userId));
     }
 
-    @PutMapping("paramsCode")
+    @PutMapping("/sys/paramsCode")
     public Result<Integer> updateValueByCode(@RequestParam(value = "paramCode", required = true) String paramCode, @RequestParam(value = "paramValue", required = true) String paramValue) {
         return new Result().ok(sysParamsService.updateValueByCode(paramCode, paramValue));
     }
 
-    @GetMapping("paramsCode")
+    @GetMapping("/public/sys/paramsCode")
     public Result<String> getValueObject(@RequestParam(value = "paramCode", required = true) String paramCode) {
         return new Result().ok(sysParamsService.getValue(paramCode));
     }

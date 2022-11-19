@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2018 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
-
 package com.onefly.united.security.service;
 
 import com.onefly.united.common.service.BaseService;
@@ -15,7 +7,7 @@ import com.onefly.united.security.entity.SysLanguageEntity;
 /**
  * 国际化
  *
- * @author Mark sunlightcs@gmail.com
+ * @author Mark Rundon
  */
 public interface SysLanguageService extends BaseService<SysLanguageEntity> {
 

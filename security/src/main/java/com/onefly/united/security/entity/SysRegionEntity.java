@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2018 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
-
 package com.onefly.united.security.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
@@ -17,7 +9,7 @@ import java.util.Date;
 /**
  * 行政区域
  *
- * @author Mark sunlightcs@gmail.com
+ * @author Mark Rundon
  */
 @Data
 @TableName("sys_region")

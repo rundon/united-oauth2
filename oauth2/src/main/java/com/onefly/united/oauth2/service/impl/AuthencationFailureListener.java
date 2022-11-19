@@ -6,6 +6,7 @@ import com.onefly.united.common.constant.Constant;
 import com.onefly.united.common.constant.LogMessageDto;
 import com.onefly.united.common.constant.LoginOperationEnum;
 import com.onefly.united.common.constant.LoginStatusEnum;
+import com.onefly.united.common.redis.RedisMqUtil;
 import com.onefly.united.common.utils.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class AuthencationFailureListener implements ApplicationListener<Abstract
                 data.put("creatorName", username);
                 data.put("createDate", new Date());
                 msg.setData(data);
-                redisTemplate.convertAndSend(Constant.LOG_CHANNEL_TOPIC, JSON.toJSONString(msg));
+                RedisMqUtil.addQueueTask(JSON.toJSONString(msg));
             } else {
                 log.error("用户名为空");
             }

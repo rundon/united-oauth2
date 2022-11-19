@@ -3,10 +3,11 @@ package com.onefly.united.oauth2.config;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.onefly.united.common.constant.Constant;
 import com.onefly.united.common.constant.LogMessageDto;
 import com.onefly.united.common.constant.LoginOperationEnum;
 import com.onefly.united.common.constant.LoginStatusEnum;
+import com.onefly.united.common.redis.RedisMqUtil;
+import com.onefly.united.common.user.UserDetail;
 import com.onefly.united.common.utils.IpUtils;
 import com.onefly.united.common.utils.Result;
 import com.onefly.united.oauth2.captcha.CaptchaFilter;
@@ -173,6 +174,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         @Override
         public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
             String accessToken = extractHeaderToken(request);
+            saveLoginLog(request, authentication);
             if (StringUtils.isNotBlank(accessToken)) {
                 OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);
                 if (oAuth2AccessToken != null) {
@@ -182,7 +184,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                     tokenStore.removeAccessTokenUsingRefreshToken(oAuth2RefreshToken);
                 }
             }
-            //saveLog(request);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.getWriter().append(JSON.toJSONString(new Result()));
         }
@@ -208,19 +209,23 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             return authHeaderValue;
         }
 
-        private void saveLog(HttpServletRequest request) {
+        private void saveLoginLog(HttpServletRequest request, Authentication authentication) {
+            //用户信息
+            UserDetail user = (UserDetail) authentication.getPrincipal();
             LogMessageDto log = new LogMessageDto();
-            log.setLogType("03");
+            log.setLogType("01");
             Map<String, Object> data = Maps.newHashMap();
             data.put("ip", IpUtils.getIpAddr(request));
             data.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
             data.put("operation", LoginOperationEnum.LOGOUT.value());
             data.put("status", LoginStatusEnum.SUCCESS.value());
-            //data.put("creator", user.getId());
-            //data.put("creatorName", user.getUsername());
+            if (user != null) {
+                data.put("creator", user.getId());
+                data.put("creatorName", user.getUsername());
+            }
             data.put("createDate", new Date());
             log.setData(data);
-            redisTemplate.convertAndSend(Constant.LOG_CHANNEL_TOPIC, JSON.toJSONString(log));
+            RedisMqUtil.addQueueTask(JSON.toJSONString(log));
         }
     }
 

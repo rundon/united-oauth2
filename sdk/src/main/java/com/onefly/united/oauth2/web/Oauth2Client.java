@@ -24,6 +24,6 @@ public interface Oauth2Client {
     Result<Integer> updateValueByCode(@RequestParam(value = "paramCode", required = true) String paramCode,
                                       @RequestParam(value = "paramValue", required = true) String paramValue);
 
-    @GetMapping("/api/sys/paramsCode")
+    @GetMapping("/api/public/sys/paramsCode")
     Result<String> getValueObject(@RequestParam(value = "paramCode", required = true) String paramCode);
 }

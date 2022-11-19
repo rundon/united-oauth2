@@ -2,15 +2,14 @@ package com.onefly.united.oauth2.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
-import com.onefly.united.common.constant.Constant;
 import com.onefly.united.common.constant.LogMessageDto;
 import com.onefly.united.common.constant.LoginOperationEnum;
 import com.onefly.united.common.constant.LoginStatusEnum;
+import com.onefly.united.common.redis.RedisMqUtil;
 import com.onefly.united.common.user.UserDetail;
 import com.onefly.united.common.utils.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
@@ -24,9 +23,6 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
 
     @Autowired
     private HttpServletRequest request;
-
-    @Autowired
-    private StringRedisTemplate redisTemplate;
 
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
@@ -44,7 +40,7 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
             data.put("creatorName", user.getUsername());
             data.put("createDate", new Date());
             log.setData(data);
-            redisTemplate.convertAndSend(Constant.LOG_CHANNEL_TOPIC, JSON.toJSONString(log));
+            RedisMqUtil.addQueueTask(JSON.toJSONString(log));
         }
     }
 }

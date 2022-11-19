@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2018 人人开源 All rights reserved.
- * <p>
- * https://www.renren.io
- * <p>
- * 版权所有，侵权必究！
- */
-
 package com.onefly.united.security.controller;
 
 import com.onefly.united.common.exception.ErrorCode;
@@ -32,7 +24,7 @@ import java.util.Set;
 /**
  * 菜单管理
  *
- * @author Mark sunlightcs@gmail.com
+ * @author Mark Rundon
  */
 @RestController
 @RequestMapping("/api/sys/menu")
