@@ -25,10 +25,10 @@
     <!--<logger name="druid.sql.ResultSet" level="TRACE"/>-->
     <logger name="druid.sql" level="warn"/>
 
-    <logger name="org.springframework.security" level="warn"/>
+    <logger name="org.springframework.security" level="debug"/>
     <!--<logger name="com.netflix" level="debug"/>-->
 
-    <root level="warn">
+    <root level="debug">
         <appender-ref ref="STDOUT"/>
     </root>
 

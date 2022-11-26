@@ -131,7 +131,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/oauth/logout", "GET"))
-                .logoutSuccessHandler(logoutSuccessHandler(tokenStore, redisTemplate));
+                .logoutSuccessHandler(logoutSuccessHandler(tokenStore));
 
         if (captchaProperties.isEnabled()) {
             //添加验证码
@@ -153,8 +153,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    private LogoutSuccessHandler logoutSuccessHandler(TokenStore tokenStore, StringRedisTemplate redisTemplate) {
-        return new SsoLogoutSuccessHandler(tokenStore, redisTemplate);
+    private LogoutSuccessHandler logoutSuccessHandler(TokenStore tokenStore) {
+        return new SsoLogoutSuccessHandler(tokenStore);
     }
 
     /**
@@ -164,11 +164,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         private TokenStore tokenStore;
 
-        private StringRedisTemplate redisTemplate;
-
-        public SsoLogoutSuccessHandler(TokenStore tokenStore, StringRedisTemplate redisTemplate) {
+        public SsoLogoutSuccessHandler(TokenStore tokenStore) {
             this.tokenStore = tokenStore;
-            this.redisTemplate = redisTemplate;
         }
 
         @Override
@@ -211,7 +208,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         private void saveLoginLog(HttpServletRequest request, Authentication authentication) {
             //用户信息
-            UserDetail user = (UserDetail) authentication.getPrincipal();
             LogMessageDto log = new LogMessageDto();
             log.setLogType("01");
             Map<String, Object> data = Maps.newHashMap();
@@ -219,7 +215,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             data.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
             data.put("operation", LoginOperationEnum.LOGOUT.value());
             data.put("status", LoginStatusEnum.SUCCESS.value());
-            if (user != null) {
+            if (authentication != null) {
+                UserDetail user = (UserDetail) authentication.getPrincipal();
                 data.put("creator", user.getId());
                 data.put("creatorName", user.getUsername());
             }
