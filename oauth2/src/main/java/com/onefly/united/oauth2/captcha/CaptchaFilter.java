@@ -1,11 +1,7 @@
 package com.onefly.united.oauth2.captcha;
 
-import com.alibaba.fastjson.JSON;
-import com.onefly.united.common.exception.ExceptionUtils;
-import com.onefly.united.common.utils.Result;
 import com.onefly.united.oauth2.common.ErrorCode;
 import com.onefly.united.oauth2.filter.BaseRequiresMatcherFilter;
-import org.springframework.http.MediaType;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.FilterChain;
@@ -31,7 +27,7 @@ public class CaptchaFilter extends BaseRequiresMatcherFilter {
         try {
             captchaManage.generate(request, response);
         } catch (Exception e) {
-            ErrorCode.sendError(response, HttpServletResponse.SC_OK,10007, ErrorCode.ILLIGAL_CAPTCHA_CODE);
+            ErrorCode.sendError(response, HttpServletResponse.SC_OK, 10007, ErrorCode.ILLIGAL_CAPTCHA_CODE);
         }
     }
 }
